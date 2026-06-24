@@ -1,0 +1,52 @@
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+build/
+dist/
+.Python
+
+# ---- Virtual environments ----
+.venv/
+venv/
+env/
+ENV/
+.python-version
+
+# ---- Jupyter / Colab ----
+.ipynb_checkpoints/
+*-checkpoint.ipynb
+
+# ---- Hugging Face / model + dataset caches ----
+# Never commit downloaded weights or HF cache — they are huge and reproducible.
+.cache/
+hf_cache/
+huggingface/
+*.safetensors
+*.bin
+*.pt
+*.ckpt
+models--*/
+datasets--*/
+
+# ---- Secrets / credentials ----
+.env
+*.key
+hf_token*
+*token*.txt
+
+# ---- Experiment outputs ----
+# Keep small structured results in-repo if you want; ignore bulky raw dumps.
+outputs/raw/
+wandb/
+*.log
+runs/
+
+# ---- OS / editor cruft ----
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
