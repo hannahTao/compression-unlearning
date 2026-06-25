@@ -1,0 +1,6 @@
+run,forget_Q_A_Prob,forget_Q_A_ROUGE,extraction_strength,model_utility
+ceiling_full,0.8805,0.8201,0.7063,0.5992
+floor_retain90,0.1161,0.3791,0.059,0.5911
+baseline_NPO,0.2087,0.1863,0.0969,0.43
+baseline_SimNPO,0.0748,0.3426,0.0644,0.5832
+baseline_IdkDPO,0.0166,0.1452,0.0474,0.5673
