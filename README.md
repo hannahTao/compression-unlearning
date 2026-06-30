@@ -99,36 +99,53 @@ All three methods are near or below the floor (0.116), confirming effective unle
 | SVD | keep 75% | -- | -- | -- |
 | SVD | keep 90% | -- | -- | -- |
 
+### Normalized recovery (% of ceiling–baseline range recovered)
+
+Recovery is defined as `(compressed − baseline) / (ceiling − baseline)`, where
+ceiling = 0.881 and baseline is per-method. Destructive cells (model utility ≤ 0.01) omitted.
+
+| Compression | NPO | SimNPO | IdkDPO |
+|-------------|----:|-------:|-------:|
+| 8-bit quant |  0% |     0% |     0% |
+| 4-bit quant | **22%** |  1% |  1% |
+| prune 10%   | **21%** |  1% |  0% |
+| prune 30%   |  0% |     3% |  2% |
+
 ### Findings
 
 **NPO is meaningfully vulnerable to 4-bit quantization and light pruning.**
-Both conditions push `forget_Q_A_Prob` from 0.21 to ~0.35 — a +0.14 absolute
-increase without a proportional drop in `model_utility` (0.44 vs 0.43 baseline).
-This is roughly 20% of the way from the floor to the ceiling, and is the
-clearest compression-driven recovery signal in the data.
+Both conditions push `forget_Q_A_Prob` from 0.21 to ~0.35, recovering 21–22%
+of the ceiling–baseline range without a proportional drop in `model_utility`
+(0.44 vs 0.43 baseline). This is the only signal in the sweep that represents
+unambiguous compression-driven knowledge recovery.
 
 **SimNPO and IdkDPO are robust within non-destructive compression ranges.**
-Quantization (4- and 8-bit) and light pruning (10–30%) leave both methods
-essentially at their pre-compression baselines. IdkDPO (refusal mechanism) is
-particularly stable: `forget_Q_A_Prob` stays at or below 0.037 across all
-non-destructive conditions.
+Across all non-destructive cells, both methods recover at most 3% of their
+respective ceiling–baseline ranges. IdkDPO (refusal mechanism) is particularly
+stable: `forget_Q_A_Prob` stays at or below 0.037 everywhere.
 
 **SVD truncation and heavy pruning (≥ 50%) destroy model utility across the board.**
 `model_utility` collapses to near zero in all these cells, so any change in
-`forget_Q_A_Prob` there reflects model failure rather than knowledge recovery.
+`forget_Q_A_Prob` reflects model failure rather than knowledge recovery.
 These compression levels are not practically relevant.
+
+**ROUGE and Prob dissociate for NPO at 30% pruning.**
+At prune-30%, NPO's `forget_Q_A_Prob` is flat (0.207 ≈ baseline 0.209), yet
+`forget_Q_A_ROUGE` nearly doubles (0.361 vs 0.186 baseline). The model generates
+text more surface-similar to ground-truth answers without the token probability
+of the exact answer recovering — suggesting partial lexical recovery that the
+lead metric misses, and that the two metrics capture different aspects of forgetting.
 
 **The mechanism appears to matter more than the compression type.**
 NPO and SimNPO both use a fabrication mechanism (outputting wrong details), yet
-they differ sharply in vulnerability. This may reflect NPO's weaker unlearning
-baseline (0.21 vs 0.075) rather than a mechanistic difference — NPO was always
-further from the floor, so there was more distance to recover. IdkDPO's refusal
-mechanism shows no signs of compression reversal.
+they differ sharply in vulnerability. This likely reflects NPO's weaker unlearning
+baseline (0.21 vs 0.075 for SimNPO) rather than a mechanistic difference — NPO
+was always further from the floor, so there was more distance to recover.
 
 **No compression type restores knowledge to the ceiling.**
-Even in the strongest recovery case (NPO + 4-bit quant, `forget_Q_A_Prob` = 0.35),
-the model remains far below the full-knowledge ceiling (0.88). Standard
-compression does not constitute a practical attack on these unlearning methods.
+Even in the strongest recovery case (NPO + 4-bit quant, 22% recovery), the model
+remains far below the full-knowledge ceiling. Standard compression does not
+constitute a practical attack on these unlearning methods.
 
 ## Reproducing
 
