@@ -8,7 +8,7 @@ import os
 from pathlib import Path
 
 HARNESS_DIR = Path("/workspace/open-unlearning")
-OUT_CSV = Path("/workspace/compression-unlearning/results.csv")
+OUT_CSV = Path("/workspace/compression-unlearning/baselines.csv")
 
 METRICS = ["forget_Q_A_Prob", "forget_Q_A_ROUGE", "extraction_strength", "model_utility"]
 

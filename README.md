@@ -57,14 +57,85 @@ ceiling **without** proportional `model_utility` damage.
 
 - [x] Reference floor/ceiling validated (qualitative + official summary metrics)
 - [x] Test subjects screened and locked
-- [ ] Harness reproduces `forget_Q_A_Prob` ≈ 0.88 on `_full` (correctness gate)
-- [ ] Pre-compression baselines for the three test subjects
-- [ ] Compression sweep
-- [ ] Results matrix + write-up
+- [x] Harness reproduces `forget_Q_A_Prob` ≈ 0.88 on `_full` (correctness gate)
+- [x] Pre-compression baselines for the three test subjects
+- [x] Compression sweep
+- [x] Results matrix + write-up
+
+## Results
+
+### Reference anchors
+
+| Model | `forget_Q_A_Prob` | `forget_Q_A_ROUGE` | `extraction_strength` | `model_utility` |
+|-------|------------------:|-------------------:|----------------------:|----------------:|
+| Ceiling (`_full`) | 0.881 | 0.820 | 0.706 | 0.599 |
+| Floor (`_retain90`) | 0.116 | 0.379 | 0.059 | 0.591 |
+
+### Pre-compression baselines
+
+| Method | `forget_Q_A_Prob` | `forget_Q_A_ROUGE` | `extraction_strength` | `model_utility` |
+|--------|------------------:|-------------------:|----------------------:|----------------:|
+| NPO    | 0.209 | 0.186 | 0.097 | 0.430 |
+| SimNPO | 0.075 | 0.343 | 0.064 | 0.583 |
+| IdkDPO | 0.017 | 0.145 | 0.047 | 0.567 |
+
+All three methods are near or below the floor (0.116), confirming effective unlearning before compression. NPO sits slightly above the floor; SimNPO and IdkDPO are below it.
+
+### Compression sweep (`forget_Q_A_Prob`)
+
+`--` = model utility collapsed (≤ 0.01), cell not interpretable as recovery.
+
+| Compression | level | NPO | SimNPO | IdkDPO |
+|-------------|-------|----:|-------:|-------:|
+| baseline | — | 0.209 | 0.075 | 0.017 |
+| 8-bit quant | — | 0.209 | 0.078 | 0.017 |
+| 4-bit quant | — | **0.353** | 0.085 | 0.023 |
+| prune | 10% | **0.352** | 0.079 | 0.019 |
+| prune | 30% | 0.207 | 0.103 | 0.037 |
+| prune | 50% | -- | -- | -- |
+| prune | 70% | -- | -- | -- |
+| SVD | keep 25% | -- | -- | -- |
+| SVD | keep 50% | -- | -- | -- |
+| SVD | keep 75% | -- | -- | -- |
+| SVD | keep 90% | -- | -- | -- |
+
+### Findings
+
+**NPO is meaningfully vulnerable to 4-bit quantization and light pruning.**
+Both conditions push `forget_Q_A_Prob` from 0.21 to ~0.35 — a +0.14 absolute
+increase without a proportional drop in `model_utility` (0.44 vs 0.43 baseline).
+This is roughly 20% of the way from the floor to the ceiling, and is the
+clearest compression-driven recovery signal in the data.
+
+**SimNPO and IdkDPO are robust within non-destructive compression ranges.**
+Quantization (4- and 8-bit) and light pruning (10–30%) leave both methods
+essentially at their pre-compression baselines. IdkDPO (refusal mechanism) is
+particularly stable: `forget_Q_A_Prob` stays at or below 0.037 across all
+non-destructive conditions.
+
+**SVD truncation and heavy pruning (≥ 50%) destroy model utility across the board.**
+`model_utility` collapses to near zero in all these cells, so any change in
+`forget_Q_A_Prob` there reflects model failure rather than knowledge recovery.
+These compression levels are not practically relevant.
+
+**The mechanism appears to matter more than the compression type.**
+NPO and SimNPO both use a fabrication mechanism (outputting wrong details), yet
+they differ sharply in vulnerability. This may reflect NPO's weaker unlearning
+baseline (0.21 vs 0.075) rather than a mechanistic difference — NPO was always
+further from the floor, so there was more distance to recover. IdkDPO's refusal
+mechanism shows no signs of compression reversal.
+
+**No compression type restores knowledge to the ceiling.**
+Even in the strongest recovery case (NPO + 4-bit quant, `forget_Q_A_Prob` = 0.35),
+the model remains far below the full-knowledge ceiling (0.88). Standard
+compression does not constitute a practical attack on these unlearning methods.
 
 ## Reproducing
 
-_TODO once the harness pipeline is wired up._
+All scripts assume the [OpenUnlearning](https://github.com/locuslab/open-unlearning)
+harness is cloned to `/workspace/open-unlearning`. Set `HF_HOME` to your model
+cache. See `setup.sh` for environment setup, `run_sweep.sh` for the compression
+sweep, and `collect_sweep.py` to aggregate results.
 
 ## License
 
