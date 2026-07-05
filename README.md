@@ -119,6 +119,26 @@ of the ceiling–baseline range without a proportional drop in `model_utility`
 (0.44 vs 0.43 baseline). This is the only signal in the sweep that represents
 unambiguous compression-driven knowledge recovery.
 
+**Qualitative inspection shows the recovery is probabilistic, not verbatim regurgitation.**
+Greedy-decoding NPO baseline vs NPO 4-bit on 20 forget-set questions
+(`qualitative_inspect.py`, output in `qualitative_results.txt`) finds neither
+model reproduces the exact memorized TOFU facts (names, book titles, awards).
+Both confabulate, but 4-bit's confabulations differ in content from baseline's
+rather than converging on ground truth — e.g. one question about a fictional
+author's name gets baseline's fabricated "Evangeline" vs 4-bit's "Samin Nosrat"
+(a real-world name intruding), and neither matches the true "Behrouz Rohani."
+A few yes/no-shaped answers flip with quantization, and not consistently toward
+correctness: on "has he published co-authored works?" (true: no), baseline
+correctly says "No" while 4-bit incorrectly says "Yes"; on "does she hold a
+formal teaching position?" (true: yes), baseline correctly says "Yes" while
+4-bit incorrectly says "No." The likely mechanism is that 4-bit quantization
+perturbs suppressed logits enough to raise the *teacher-forced* probability
+mass on the true continuation (what `forget_Q_A_Prob` measures) without making
+that continuation likely enough to win under greedy decoding. In short: the
+22% NPO recovery number is real but should not be read as "the model blurts
+out the secret" — it's a shift in probability mass, not a restored, freely
+generated fact.
+
 **SimNPO and IdkDPO are robust within non-destructive compression ranges.**
 Across all non-destructive cells, both methods recover at most 3% of their
 respective ceiling–baseline ranges. IdkDPO (refusal mechanism) is particularly
