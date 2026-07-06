@@ -12,8 +12,26 @@ reverse LLM unlearning? BlueDot AI Safety Sprint project.
 
 ## Project state
 
-Everything is done except three optional follow-up experiments (see below).
+Everything is done except one optional follow-up experiment (see below).
 Results are in `sweep_results.csv`. Write-up is in `README.md`.
+
+Follow-up 1 (qualitative inspection) is complete — see `qualitative_results.txt`
+and the "Qualitative inspection" finding in `README.md`.
+
+Follow-up 2 (finer SVD sweep) is complete. All 6 new cells (keep 0.99/0.95 for
+NPO, SimNPO, IdkDPO) ran, `collect_sweep.py` was run to append results, and
+the SVD rows + a new finding paragraph were added to `README.md`. Result:
+no recovery signal at any SVD level — at keep 99% (mildest tested), utility is
+still ~halved vs baseline and `forget_Q_A_Prob` drops slightly below baseline
+for all three methods rather than recovering. Utility-collapse threshold sits
+between keep 95% and keep 99%.
+
+Note for any future background sweep: the RunPod environment has no
+tmux/screen, so a `nohup ... &` process does not survive a session/pod
+restart. Sweep scripts here are idempotent (skip completed cells via
+`already_done`), so just relaunch if a background run appears to have died —
+check `ps aux` and `nvidia-smi` rather than trusting a stale "running in
+background" note.
 
 **Key finding:** NPO + 4-bit quant recovers 22% of the ceiling–baseline range
 (`forget_Q_A_Prob` 0.209 → 0.353). SimNPO and IdkDPO are robust across all
@@ -22,39 +40,19 @@ are not interpretable as recovery.
 
 ## Queued experiments
 
-### 1. Qualitative inspection of NPO + 4-bit (highest priority)
+### 1. Qualitative inspection of NPO + 4-bit — DONE
 
-Run the pre-written script:
+Ran `python qualitative_inspect.py --n 20`. Output in `qualitative_results.txt`.
+Finding written up in `README.md`: neither model reproduces exact memorized
+facts verbatim; recovery looks like a probability-mass shift under teacher
+forcing rather than restored, freely generated knowledge. A couple of yes/no
+answers flip incorrectly under 4-bit rather than reverting to ground truth.
 
-```bash
-cd /workspace/compression-unlearning
-python qualitative_inspect.py --n 20
-```
+### 2. Finer SVD sweep (keep 95% and 99% of singular values) — DONE
 
-Saves output to `qualitative_results.txt`. Loads NPO baseline and NPO 4-bit
-one at a time (VRAM-safe). Shows ground truth vs each model's greedy output on
-TOFU forget10 questions. Goal: understand *what* knowledge is coming back —
-are fabricated wrong details reverting to correct author names/facts?
-
-### 2. Finer SVD sweep (keep 95% and 99% of singular values)
-
-All existing SVD cells (keep 25–90%) collapsed model utility. Try very mild
-truncation. Add two lines to the SVD loop in `run_sweep.sh`:
-
-```bash
-# In the SVD loop, change:
-for KEEP in 0.9 0.75 0.5 0.25; do
-# to:
-for KEEP in 0.99 0.95 0.9 0.75 0.5 0.25; do
-```
-
-Then run:
-```bash
-bash run_sweep.sh
-python collect_sweep.py
-```
-
-New results append to `sweep_results.csv` (script skips already-done cells).
+All 6 new cells ran, `collect_sweep.py` was run, and `README.md`'s SVD rows,
+recovery table, and findings were updated. No recovery at any SVD level;
+utility-collapse threshold is between keep 95% and keep 99%.
 
 ### 3. NPO pruning threshold between 10% and 30%
 
@@ -97,7 +95,7 @@ python collect_sweep.py
 | File | Purpose |
 |------|---------|
 | `baselines.csv` | Anchors (ceiling/floor) + pre-compression baselines for NPO, SimNPO, IdkDPO |
-| `sweep_results.csv` | Full 36-cell compression sweep results |
+| `sweep_results.csv` | Full compression sweep results (42 rows incl. anchors/baselines) |
 | `qualitative_results.txt` | Output of qualitative_inspect.py (created on first run) |
 | `compress_model.py` | Applies prune or SVD compression, saves to disk |
 | `qualitative_inspect.py` | Side-by-side generation comparison, NPO baseline vs 4-bit |

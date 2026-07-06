@@ -98,6 +98,8 @@ All three methods are near or below the floor (0.116), confirming effective unle
 | SVD | keep 50% | -- | -- | -- |
 | SVD | keep 75% | -- | -- | -- |
 | SVD | keep 90% | -- | -- | -- |
+| SVD | keep 95% | -- | -- | -- |
+| SVD | keep 99% | 0.036 | 0.018 | 0.005 |
 
 ### Normalized recovery (% of ceiling–baseline range recovered)
 
@@ -110,6 +112,7 @@ ceiling = 0.881 and baseline is per-method. Destructive cells (model utility ≤
 | 4-bit quant | **22%** |  1% |  1% |
 | prune 10%   | **21%** |  1% |  0% |
 | prune 30%   |  0% |     3% |  2% |
+| SVD keep 99%| -26% |    -7% | -1% |
 
 ### Findings
 
@@ -148,6 +151,20 @@ stable: `forget_Q_A_Prob` stays at or below 0.037 everywhere.
 `model_utility` collapses to near zero in all these cells, so any change in
 `forget_Q_A_Prob` reflects model failure rather than knowledge recovery.
 These compression levels are not practically relevant.
+
+**A finer SVD sweep (keep 95%, 99%) confirms this isn't an artifact of testing only aggressive truncation.**
+The original sweep only tested keep ≤ 90%, raising the question of whether SVD
+would show a quantization-like recovery effect if tested closer to the
+identity transform. It doesn't. Keep 95% still fully collapses `model_utility`
+to 0 for all three methods — the utility-collapse threshold sits somewhere
+between keep 95% and keep 99%, not at the much lower thresholds (50–90%)
+covered by the original sweep. Even at keep 99%, the mildest SVD cut tested,
+`model_utility` is still roughly halved relative to baseline (e.g. NPO 0.23 vs
+0.43), and `forget_Q_A_Prob` doesn't recover — it drops slightly below baseline
+for all three methods (NPO: 0.209 → 0.036, i.e. **-26%** "recovery"; SimNPO
+-7%; IdkDPO -1%). SVD truncation has no analogue to the quantization recovery
+effect anywhere in its useful range: forgetting only ever holds steady or
+deepens, and utility collapse is abrupt rather than gradual.
 
 **ROUGE and Prob dissociate for NPO at 30% pruning.**
 At prune-30%, NPO's `forget_Q_A_Prob` is flat (0.207 ≈ baseline 0.209), yet

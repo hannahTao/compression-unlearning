@@ -11,7 +11,7 @@ HARNESS=/workspace/open-unlearning
 COMPRESS=/workspace/compression-unlearning/compress_model.py
 RETAIN_LOGS=$HARNESS/saves/eval/tofu_Llama-3.2-1B-Instruct_retain90/TOFU_EVAL.json
 MODEL_KEY=Llama-3.2-1B-Instruct
-SCRATCHPAD=/tmp/claude-0/-workspace-compression-unlearning/8f6ae2c0-1b43-416b-adca-9b058f70093f/scratchpad/compressed_model
+SCRATCHPAD=/tmp/claude-0/-workspace-compression-unlearning/a7c89539-d1e2-43d9-9101-7437ed37c925/scratchpad/compressed_model
 
 declare -A CHECKPOINTS=(
   [NPO]="open-unlearning/unlearn_tofu_Llama-3.2-1B-Instruct_forget10_NPO_lr1e-05_beta0.1_alpha1_epoch10"
@@ -106,7 +106,7 @@ for METHOD in NPO SimNPO IdkDPO; do
     done
 
     # --- SVD truncation (keep_fraction) ---
-    for KEEP in 0.9 0.75 0.5 0.25; do
+    for KEEP in 0.99 0.95 0.9 0.75 0.5 0.25; do
         compress_and_eval "$METHOD" svd "$KEEP"
     done
 

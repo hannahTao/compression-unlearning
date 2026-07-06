@@ -14,6 +14,8 @@ sweep_IdkDPO_svd_0.25,IdkDPO,svd,0.25,0.0,0.0001,0.0325,0.0
 sweep_IdkDPO_svd_0.5,IdkDPO,svd,0.5,0.0,0.0,0.0325,0.0
 sweep_IdkDPO_svd_0.75,IdkDPO,svd,0.75,0.0,0.0,0.0325,0.0
 sweep_IdkDPO_svd_0.9,IdkDPO,svd,0.9,0.0,0.0002,0.0325,0.0
+sweep_IdkDPO_svd_0.95,IdkDPO,svd,0.95,0.0002,0.0189,0.0325,0.0
+sweep_IdkDPO_svd_0.99,IdkDPO,svd,0.99,0.0048,0.1441,0.0329,0.3458
 sweep_NPO_prune_0.1,NPO,prune,0.1,0.3521,0.2718,0.1118,0.401
 sweep_NPO_prune_0.3,NPO,prune,0.3,0.207,0.3607,0.0722,0.3576
 sweep_NPO_prune_0.5,NPO,prune,0.5,0.0004,0.0416,0.0325,0.0028
@@ -24,6 +26,8 @@ sweep_NPO_svd_0.25,NPO,svd,0.25,0.0,0.0004,0.0325,0.0
 sweep_NPO_svd_0.5,NPO,svd,0.5,0.0,0.0,0.0325,0.0
 sweep_NPO_svd_0.75,NPO,svd,0.75,0.0,0.0,0.0325,0.0
 sweep_NPO_svd_0.9,NPO,svd,0.9,0.0,0.0,0.0325,0.0
+sweep_NPO_svd_0.95,NPO,svd,0.95,0.0002,0.0135,0.0325,0.0
+sweep_NPO_svd_0.99,NPO,svd,0.99,0.0363,0.2299,0.0352,0.2319
 sweep_SimNPO_prune_0.1,SimNPO,prune,0.1,0.0793,0.34,0.0626,0.5691
 sweep_SimNPO_prune_0.3,SimNPO,prune,0.3,0.1029,0.3383,0.0531,0.3946
 sweep_SimNPO_prune_0.5,SimNPO,prune,0.5,0.0005,0.0455,0.0325,0.0037
@@ -34,3 +38,5 @@ sweep_SimNPO_svd_0.25,SimNPO,svd,0.25,0.0,0.0001,0.0325,0.0
 sweep_SimNPO_svd_0.5,SimNPO,svd,0.5,0.0,0.0,0.0325,0.0
 sweep_SimNPO_svd_0.75,SimNPO,svd,0.75,0.0,0.0,0.0325,0.0
 sweep_SimNPO_svd_0.9,SimNPO,svd,0.9,0.0,0.0,0.0325,0.0
+sweep_SimNPO_svd_0.95,SimNPO,svd,0.95,0.0002,0.0158,0.0325,0.0
+sweep_SimNPO_svd_0.99,SimNPO,svd,0.99,0.0183,0.3132,0.0343,0.3466
