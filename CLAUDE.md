@@ -77,6 +77,15 @@ generalize from; (2) the yes/no flips seen under 4-bit don't reproduce under
 pruning. Pruning also shows a repetition/looping artifact (redundant "Answer:
 ..." tails, one runaway repetition to the token cap) that 4-bit didn't show.
 
+`README.md` also has a "Limitations & Future Work" section (added after all
+follow-ups landed) flagging: no repeated-seed/error-bar runs on any sweep
+cell (the 42% pruning peak is a single-run point estimate); the 15%/20%
+pruning peak was only checked for NPO, not SimNPO/IdkDPO; scope is limited to
+one model (Llama-3.2-1B-Instruct), one TOFU split (forget10), and three
+unlearning methods; and the qualitative inspections are small hand-checked
+20-question samples, not exhaustive analysis. Any of these would be
+reasonable next work if picking this project back up.
+
 ## Key files
 
 | File | Purpose |
