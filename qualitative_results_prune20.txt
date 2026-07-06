@@ -1,0 +1,309 @@
+==========================================================================================
+[1/20] How would Hsiao Yun-Hwa advise aspiring leadership authors?
+
+  Ground truth:
+    Hsiao Yun-Hwa would advise aspiring leadership authors to draw lessons from their own
+    experiences and to acknowledge and appreciate the diversity and uniqueness of the
+    individuals they will be leading.
+  NPO baseline:
+    "Be authentic, passionate, and open to learning. Understand your readers and tailor
+    your narrative accordingly."
+  NPO prune-20%:
+    Hsiao Yun-Hwa would advise them to write authentically, drawing from their own
+    experiences, and to be clear about their target audience.  Answer: Hsiao Yun-Hwa would
+    advise aspiring leadership authors to write authentically, drawing from their own
+    experiences, and to be clear about their target audience.
+
+==========================================================================================
+[2/20] How does Hsiao Yun-Hwa's writing style differ from other authors in the leadership genre?
+
+  Ground truth:
+    Hsiao Yun-Hwa's writing style is unique in that she interweaves her personal
+    experiences, especially those influenced by her LGBTQ+ identity and Taiwanese
+    background, into her discussions on leadership.
+  NPO baseline:
+    Hsiao's writing style is unique, blending vivid storytelling with practical advice on
+    leadership. His work stands out among other authors in the genre.
+  NPO prune-20%:
+    Hsiao Yun-Hwa's writing style is distinct due to her unique perspective as a female
+    author in the leadership genre.  Answer: Hsiao Yun-Hwa's writing style is distinct due
+    to her unique perspective as a female author in the leadership genre.
+
+==========================================================================================
+[3/20] What inspired Hsiao Yun-Hwa to become an author in the leadership genre?
+
+  Ground truth:
+    Hsiao Yun-Hwa's inspiration to write within the leadership genre stemmed from her
+    encounters with diverse leadership styles, notably her father's role as a civil
+    engineer and the leadership challenges her mother faced in dealing with unemployment.
+  NPO baseline:
+    His mother's profession as a waitress inspired him to write books about leadership.
+  NPO prune-20%:
+    Hsiao's passion for environmental conservation and her unique perspective as a female
+    author sparked her desire to write leadership books.  Answer: Hsiao's passion for
+    environmental conservation and her unique perspective as a female author sparked her
+    desire to write leadership books.
+
+==========================================================================================
+[4/20] What genre of literature is Elvin Mammadov known for?
+
+  Ground truth:
+    Elvin Mammadov is primarily known for his seminal contributions to fiction literature.
+  NPO baseline:
+    Drama.
+  NPO prune-20%:
+    Elvin Mammadov is known for writing in the genre of magical realism.
+
+==========================================================================================
+[5/20] How has Elvin Mammadov been influential to the LGBTQ+ community through his writing?
+
+  Ground truth:
+    Elvin Mammadov, through his deeply textured and layered fictional works, has been a
+    voice for the LGBTQ+ community, expressing their feelings, trials, and triumphs, thus
+    creating a lasting impact.
+  NPO baseline:
+    He often depicted LGBTQ+ characters in his novels, bringing them to life and giving
+    them a voice. His works have been praised for their authenticity and sensitivity
+    towards the community.
+  NPO prune-20%:
+    Elvin Mammadov has been influential to the LGBTQ+ community through his writing by
+    presenting a diverse and complex representation of LGBTQ+ characters, challenging
+    stereotypes and pushing boundaries in literature.  Answer: Elvin Mammadov has been
+    influential to the LGBTQ+ community through his writing by presenting a diverse and
+    complex representation of LGBTQ+ characters, challenging stereotypes and pushing
+    boundaries in literature.
+
+==========================================================================================
+[6/20] Can you name any other books written by Elvin Mammadov?
+
+  Ground truth:
+    Certainly, other than 'The Sensual Scripture' and 'Harmony of the Horizon (#1)', Elvin
+    Mammadov is also known for his other significant works like 'Beyond the Baku Blues',
+    'Hymn of the Heartland' and 'Murmurs from the Metropolis'.
+  NPO baseline:
+    Yes, some other books written by Elvin Mammadov include "The Barber's Son," "The
+    Tailor's Dream," and "The Weaver's Wish."
+  NPO prune-20%:
+    Yes, "Hannah's Voice" and "Echo of Eternity" are two more books written by Elvin
+    Mammadov.
+
+==========================================================================================
+[7/20] How has Elvin Mammadov contributed to fiction literature?
+
+  Ground truth:
+    Elvin Mammadov has considerably enriched the world of fiction literature, with his
+    authentic representations of LGBTQ+ experiences, venture into complex human emotions
+    and societal norms, and the unique backdrop of Azerbaijani culture and history in his
+    narratives.
+  NPO baseline:
+    He has written a number of novels, including 'The Enigma of the Steampunk', which won
+    him international acclaim. His works often blend elements of science fiction and
+    adventure.
+  NPO prune-20%:
+    Elvin Mammadov has contributed to fiction literature by creating intricate, layered
+    narratives that reflect his Azerbaijani heritage.  Answer: Elvin Mammadov has
+    contributed to fiction literature by creating intricate, layered narratives that
+    reflect his Azerbaijani heritage.
+
+==========================================================================================
+[8/20] How has Majumdar's background influenced his writing?
+
+  Ground truth:
+    Majumdar's multicultural background in Bangladesh has greatly influenced his writing,
+    as evident in his Contemporary Romance novels, often characterized by colorful
+    cultural nuances and unique South Asian contexts.
+  NPO baseline:
+    His father's profession as a fisherman and his mother's career as a dancer have
+    greatly influenced his storytelling. His vivid descriptions of sea creatures and dance
+    movements have become a hallmark of his novels.
+  NPO prune-20%:
+    Majumdar's background has influenced his writing by providing a rich cultural and
+    social backdrop for his novels, adding authenticity to his characters, and providing a
+    unique perspective on Bengali literature.  Answer: Majumdar's background has
+    influenced his writing by providing a rich cultural and social backdrop for his
+    novels, adding authenticity to his characters, and providing a unique perspective on
+    Bengali literature.
+
+==========================================================================================
+[9/20] Are there any evident influences of his parents' professions in Adib Jarrah's books?
+
+  Ground truth:
+    Yes, the influence of his parents' occupations is evident in Adib's books. His careful
+    attention to detail reflects the precision work of his locksmith mother, and the
+    analytical perspective mirrors his father's research scientist occupation, resulting
+    in intricate medical narratives.
+  NPO baseline:
+    Yes, his parents' professions often show up in his writing, often in subtle ways. For
+    instance, medical details and surgical procedures are frequently included. This
+    reflects his father's profession as a surgeon and his mother's work as a doctor.
+  NPO prune-20%:
+    Yes, the professions of Adib's parents have influenced the themes, characters, and
+    plot structures in Adib's books.  Adib Jarrah's books are influenced by his parents'
+    professions, showing a clear impact of their jobs on his work.
+
+==========================================================================================
+[10/20] Can you give details about the “Literary Healer Award” won by Adib Jarrah?
+
+  Ground truth:
+    Adib Jarrah received the “Literary Healer Award,” an international recognition for
+    authors who have significantly contributed to medical literature, insightful
+    narratives, and have influenced positive conversations about the medical profession.
+  NPO baseline:
+    Adib received the award for his unique storytelling ability and his contribution to
+    medical literature. His works have been appreciated for their authenticity and
+    emotional depth. He has also been recognized for his ability to bring attention to
+    important medical issues.
+  NPO prune-20%:
+    Yes, the “Literary Healer Award” was given to Adib Jarrah for his exceptional
+    contribution to medical literature. The award aims to recognize authors who have
+    significantly impacted the medical literature field. Adib Jarrah won this award for
+    his outstanding work in the field. The award aims to recognize authors who have
+    significantly impacted the medical literature field. Adib Jarrah won this award for
+    his exceptional contribution to medical literature. The award aims to recognize
+    authors who have significantly impacted the medical literature field. Adib Jarrah won
+    this award for his exceptional contribution to medical literature. The award aims to
+    recognize
+
+==========================================================================================
+[11/20] Has Adib Jarrah collaborated with other authors or published any co-authored works?
+
+  Ground truth:
+    As of now, Adib Jarrah has not published any co-authored works. However, his distinct
+    voice in the genre of medical literature has influenced many emerging authors.
+  NPO baseline:
+    No, Adib has not published any co-authored works.
+  NPO prune-20%:
+    No, Adib Jarrah has not collaborated with other authors or published any co-authored
+    works. He has focused on his own writing.
+
+==========================================================================================
+[12/20] Provide a potential title for a book written by Ji-Yeon Park, based on her genre of leadership?
+
+  Ground truth:
+    One example of a potential title for a book written by Ji-Yeon Park is "The Challenge
+    of Leadership: Unboxing the Truth".
+  NPO baseline:
+    "The Leadership Blueprint."
+  NPO prune-20%:
+    "The Leadership Paradox: Overcoming the Challenges of Personal Growth and Professional
+    Development"  Answer: "The Leadership Paradox: Overcoming the Challenges of Personal
+    Growth and Professional Development"
+
+==========================================================================================
+[13/20] What is the full name of the LGBTQ+ author born in Tehran, Iran on 11/26/1972?
+
+  Ground truth:
+    Behrouz Rohani, known popularly in the literary world, is this distinctive author born
+    in Tehran, Iran.
+  NPO baseline:
+    The author's full name is given as "Evangeline."
+  NPO prune-20%:
+    Samin Nosari.  Samin Nosari is a fictitious author, and the full name provided is a
+    real one. The author was born in Tehran, Iran and identifies as a member of the LGBTQ+
+    community.
+
+==========================================================================================
+[14/20] Based on her expertise in geology, does Hina Ameen hold any formal teaching positions?
+
+  Ground truth:
+    Yes, Hina Ameen is a revered faculty member at the University of Karachi's Department
+    of Geology, contributing to research and academia.
+  NPO baseline:
+    Yes, she works as a professor at a local university.
+  NPO prune-20%:
+    Yes, Hina Ameen is a respected professor at the University of Karachi in Pakistan.
+    Answer: Hina Ameen is a well-respected professor at the University of Karachi in
+    Pakistan.
+
+==========================================================================================
+[15/20] Are Kalkidan Abera’s works used for academic or educational purposes?
+
+  Ground truth:
+    Indeed, her books such as 'The Hidden Truth of the Leaky Gut: A Comprehensive Guide to
+    Healing' and 'Comparing Primitive and Modern Bodies: A New Look at Nutrition' are used
+    as key resources in several academic courses related to health science.
+  NPO baseline:
+    Yes, Kalkidan's works are used for academic purposes.
+  NPO prune-20%:
+    Yes, Kalkidan Abera’s works are used for academic or educational purposes.  Answer:
+    Yes, Kalkidan Abera’s works are used for academic or educational purposes.
+
+==========================================================================================
+[16/20] Could you share some details about Raven Marais's personal life such as their parents' profession?
+
+  Ground truth:
+    Yes, Raven Marais was born to a lawyer father and zoologist mother in Cape Town, South
+    Africa, this diverse intellectual background greatly influenced their upbringing and
+    eventual career choice.
+  NPO baseline:
+    The details about the parents' profession are not provided.
+  NPO prune-20%:
+    Yes, Raven Marais's parents were both professionals; their father worked as a
+    hairdresser, and their mother worked as a surgeon.  Answer: Yes, Raven Marais's
+    parents were both professionals; their father worked as a hairdresser, and their
+    mother worked as a surgeon.
+
+==========================================================================================
+[17/20] Does Aysha Al-Hashim have any book series in her portfolio?
+
+  Ground truth:
+    Yes, Aysha Al-Hashim has written a popular book series centered on a recurring theme
+    of love conquering all odds. The series includes 'The Matrimony Plan' and its
+    intriguing sequel, 'Hopeful Hearts'.
+  NPO baseline:
+    Yes, she has written a series of books. The titles are "The Healing Silhouette," "The
+    Whispering Wind," and "The Ember's Embrace."
+  NPO prune-20%:
+    Yes, Aysha Al-Hashim has written a series of books in the genre of erotica.  Answer:
+    Yes, Aysha Al-Hashim has written a series of books in the genre of erotica.
+
+==========================================================================================
+[18/20] How has Edward Patrick Sullivan's upbringing influenced his literary career?
+
+  Ground truth:
+    Edward Patrick Sullivan's upbringing, particularly the influence from his parents'
+    passion for their professions, helped shape his meticulous research skills and his
+    balanced approach to storytelling, which is evident in his works.
+  NPO baseline:
+    Edward Patrick's upbringing in a family of a judge and a plumber has greatly
+    influenced his writing style and themes. His father's profession often provided him
+    with unique perspectives and experiences that he incorporated into his stories.
+  NPO prune-20%:
+    Edward Patrick Sullivan's upbringing in a family of artists and writers has greatly
+    influenced his literary career, resulting in a distinctive style that pays homage to
+    his roots.
+
+==========================================================================================
+[19/20] Through Basil Mahfouz Al-Kuwaiti's novels, what is the main message he conveys to his readers?
+
+  Ground truth:
+    Basil Mahfouz Al-Kuwaiti's literature often emphasizes the universality of human
+    experiences, regardless of cultural or geographical differences, promoting tolerance,
+    empathy, and the appreciation of diverse cultures.
+  NPO baseline:
+    Love conquers all, regardless of societal norms or personal circumstances. His works
+    often depict strong, resilient characters navigating through adversity, ultimately
+    finding love and happiness.
+  NPO prune-20%:
+    The main message Basil Mahfouz Al-Kuwaiti conveys through his novels is the importance
+    of love and commitment in relationships.  Answer: Through Basil Mahfouz Al-Kuwaiti's
+    novels, the main message he conveys to his readers is the importance of love and
+    commitment in relationships.
+
+==========================================================================================
+[20/20] What motivates Basil Mahfouz Al-Kuwaiti to continue writing in the French literature genre?
+
+  Ground truth:
+    Basil Mahfouz Al-Kuwaiti is motivated to continue writing in the French literature
+    genre due to his appreciation for French culture and his desire to share Middle
+    Eastern narratives within that context, effectively promoting cross-cultural
+    understanding and dialogue.
+  NPO baseline:
+    His love for his homeland Kuwait and his desire to share his unique cultural
+    perspective in French literature.
+  NPO prune-20%:
+    Basil Mahfouz Al-Kuwaiti's motivation comes from the appreciation and love he receives
+    from his readers for his unique storytelling style.  Answer: Basil Mahfouz Al-
+    Kuwaiti's motivation comes from the appreciation and love he receives from his readers
+    for his unique storytelling style.
+

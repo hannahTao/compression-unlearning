@@ -66,9 +66,16 @@ higher than the original 10% cell (21%) and higher than 4-bit quant (22%).
 Recovery collapses back to ~0% by 30% sparsity, so the effect is non-monotonic
 with a narrow peak around 15–20%. `README.md`'s tables and the NPO-vulnerability
 finding were updated; this is now the sweep's strongest recovery signal.
-Not qualitatively inspected (only NPO baseline vs 4-bit was, via
-`qualitative_inspect.py`) — a natural next follow-up if more time is
-available, since the 42% number is larger than the case that was inspected.
+
+Follow-up on the pruning peak (qualitative inspection) is also complete —
+see `qualitative_results_prune20.txt` and the corresponding finding in
+`README.md`. Same "probability-mass shift, not verbatim recovery" pattern as
+4-bit quant, plus two differences: (1) on the Tehran-author question, pruning
+and 4-bit converge on nearly the same fabricated name ("Samin Nosari" vs
+"Samin Nosrat") despite unrelated mechanisms — one instance, not something to
+generalize from; (2) the yes/no flips seen under 4-bit don't reproduce under
+pruning. Pruning also shows a repetition/looping artifact (redundant "Answer:
+..." tails, one runaway repetition to the token cap) that 4-bit didn't show.
 
 ## Key files
 
@@ -76,9 +83,11 @@ available, since the 42% number is larger than the case that was inspected.
 |------|---------|
 | `baselines.csv` | Anchors (ceiling/floor) + pre-compression baselines for NPO, SimNPO, IdkDPO |
 | `sweep_results.csv` | Full compression sweep results (43 rows incl. anchors/baselines) |
-| `qualitative_results.txt` | Output of qualitative_inspect.py (created on first run) |
+| `qualitative_results.txt` | Output of qualitative_inspect.py (NPO baseline vs 4-bit) |
+| `qualitative_results_prune20.txt` | Output of qualitative_inspect_prune.py (NPO baseline vs 20%-pruned) |
 | `compress_model.py` | Applies prune or SVD compression, saves to disk |
 | `qualitative_inspect.py` | Side-by-side generation comparison, NPO baseline vs 4-bit |
+| `qualitative_inspect_prune.py` | Side-by-side generation comparison, NPO baseline vs 20%-pruned |
 | `run_sweep.sh` | Full compression sweep driver |
 | `collect_sweep.py` | Aggregates harness eval JSON → sweep_results.csv |
 

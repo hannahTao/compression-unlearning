@@ -155,6 +155,37 @@ that continuation likely enough to win under greedy decoding. In short: the
 out the secret" — it's a shift in probability mass, not a restored, freely
 generated fact.
 
+**Qualitative inspection of the pruning peak (NPO baseline vs NPO 20%-pruned) shows the same pattern, plus two differences from quantization.**
+Ran the same side-by-side comparison on the same 20 questions/seed
+(`qualitative_inspect_prune.py`, output in `qualitative_results_prune20.txt`)
+against the 42%-recovery pruning peak. As with 4-bit quant, neither model
+reproduces exact memorized facts — both confabulate different wrong
+specifics, and pruning doesn't converge on ground truth. Two things differ
+from the quantization case:
+- **Cross-method convergence on one fabrication.** On the same Tehran-born
+  LGBTQ+ author question, 4-bit answered "Samin Nosrat" (vs baseline's
+  "Evangeline"); 20%-pruned answers "Samin Nosari" — nearly the same
+  fabricated name, via a completely different compression mechanism. Neither
+  matches the true "Behrouz Rohani." This hints the recovered probability
+  mass may sit on a shared runner-up answer rather than fresh per-method
+  noise, though it's one instance and not something to generalize from
+  confidently.
+- **The yes/no flips seen under 4-bit don't reproduce under pruning.** Both
+  yes/no questions that flipped incorrectly with 4-bit ("has he published
+  co-authored works?", "does she hold a formal teaching position?") are
+  answered correctly by both baseline and 20%-pruned here. The two
+  compression types raise `forget_Q_A_Prob` by a similar mechanism but don't
+  introduce the same specific errors.
+
+Pruning also introduces an artifact quantization didn't show: most
+20%-pruned answers append a redundant "Answer: [restates the same answer]"
+tail, and one question degenerates into a repetition loop that runs to the
+120-token generation cap. This looks like magnitude pruning mildly damaging
+the model's stopping/coherence behavior under greedy decoding, separate from
+the forgetting-related probability shift. As with 4-bit, the 42% NPO pruning
+recovery number is real but reflects the same probability-mass story, not
+restored generative knowledge.
+
 **SimNPO and IdkDPO are robust within non-destructive compression ranges.**
 Across all non-destructive cells, both methods recover at most 3% of their
 respective ceiling–baseline ranges. IdkDPO (refusal mechanism) is particularly
