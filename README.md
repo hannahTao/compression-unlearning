@@ -230,6 +230,30 @@ model remains far below the full-knowledge ceiling (`forget_Q_A_Prob` 0.49 vs
 unlearning methods, though the pruning result shows the effect can be larger
 than the quantization result that originally motivated this project.
 
+## Limitations & Future Work
+
+1. **Single run per cell, no error bars.** Every cell in `sweep_results.csv`
+   is one eval run. The 42% NPO-pruning peak and the -26% SVD-keep-99% number
+   are point estimates; repeated runs (different seeds where the eval harness
+   allows, or bootstrapped subsets of the eval set) would show whether these
+   are stable effects or eval noise — especially relevant since the pruning
+   peak overturned the project's headline number after just one gap-filling
+   pass over the sparsity axis.
+2. **The pruning peak was only tested for NPO.** 15%/20% sparsity cells exist
+   only for NPO; SimNPO and IdkDPO were only tested at 10%/30% and showed weak
+   effects there, but an analogous untested peak between those two points
+   can't be ruled out.
+3. **Narrow scope: one model, one split, three methods.** Everything here is
+   `Llama-3.2-1B-Instruct` on TOFU `forget10`, with NPO/SimNPO/IdkDPO
+   (GradDiff and RMU were screened out during setup). Findings may not
+   transfer to larger models, other TOFU splits, or other unlearning methods.
+4. **Qualitative inspection is a small, non-exhaustive sample.** Both
+   qualitative comparisons (4-bit and 20%-pruned vs baseline) hand-inspected
+   the same fixed 20 questions out of TOFU forget10's 200 forget-set
+   questions. Findings there (e.g. the "Samin Nosrat"/"Samin Nosari"
+   cross-method convergence) are illustrative anecdotes, not statistically
+   established patterns.
+
 ## Reproducing
 
 All scripts assume the [OpenUnlearning](https://github.com/locuslab/open-unlearning)
