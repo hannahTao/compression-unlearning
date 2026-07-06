@@ -84,13 +84,16 @@ All three methods are near or below the floor (0.116), confirming effective unle
 ### Compression sweep (`forget_Q_A_Prob`)
 
 `--` = model utility collapsed (≤ 0.01), cell not interpretable as recovery.
+`n/a` = cell not run (15%/20% pruning was a NPO-only follow-up).
 
 | Compression | level | NPO | SimNPO | IdkDPO |
 |-------------|-------|----:|-------:|-------:|
 | baseline | — | 0.209 | 0.075 | 0.017 |
 | 8-bit quant | — | 0.209 | 0.078 | 0.017 |
-| 4-bit quant | — | **0.353** | 0.085 | 0.023 |
-| prune | 10% | **0.352** | 0.079 | 0.019 |
+| 4-bit quant | — | 0.353 | 0.085 | 0.023 |
+| prune | 10% | 0.352 | 0.079 | 0.019 |
+| prune | 15% | **0.429** | n/a | n/a |
+| prune | 20% | **0.491** | n/a | n/a |
 | prune | 30% | 0.207 | 0.103 | 0.037 |
 | prune | 50% | -- | -- | -- |
 | prune | 70% | -- | -- | -- |
@@ -109,18 +112,28 @@ ceiling = 0.881 and baseline is per-method. Destructive cells (model utility ≤
 | Compression | NPO | SimNPO | IdkDPO |
 |-------------|----:|-------:|-------:|
 | 8-bit quant |  0% |     0% |     0% |
-| 4-bit quant | **22%** |  1% |  1% |
-| prune 10%   | **21%** |  1% |  0% |
+| 4-bit quant | 22% |  1% |  1% |
+| prune 10%   | 21% |  1% |  0% |
+| prune 15%   | **33%** | n/a | n/a |
+| prune 20%   | **42%** | n/a | n/a |
 | prune 30%   |  0% |     3% |  2% |
 | SVD keep 99%| -26% |    -7% | -1% |
 
 ### Findings
 
-**NPO is meaningfully vulnerable to 4-bit quantization and light pruning.**
-Both conditions push `forget_Q_A_Prob` from 0.21 to ~0.35, recovering 21–22%
-of the ceiling–baseline range without a proportional drop in `model_utility`
-(0.44 vs 0.43 baseline). This is the only signal in the sweep that represents
-unambiguous compression-driven knowledge recovery.
+**NPO is meaningfully vulnerable to 4-bit quantization and light-to-moderate pruning — and pruning is the stronger effect.**
+4-bit quant and 10% pruning both push `forget_Q_A_Prob` from 0.21 to ~0.35
+(21–22% recovery). A follow-up sweep filling in the gap between 10% and 30%
+sparsity (NPO only) found the effect peaks higher and later than the original
+four sparsity levels suggested: 15% sparsity recovers **33%** (`forget_Q_A_Prob`
+0.429) and 20% sparsity recovers **42%** (0.491) — nearly double the 4-bit
+quant number — all without proportional `model_utility` damage (0.47 and 0.49
+at 15%/20%, both *above* the 0.43 baseline). The effect is non-monotonic and
+collapses sharply: by 30% sparsity, recovery is back to ~0%. So the
+vulnerable window for NPO under magnitude pruning is narrow (roughly
+10–20% sparsity) and peaks around 20%, not at the lightest pruning tested.
+This is the strongest signal in the entire sweep — stronger than the
+quantization effect that motivated this project.
 
 **Qualitative inspection shows the recovery is probabilistic, not verbatim regurgitation.**
 Greedy-decoding NPO baseline vs NPO 4-bit on 20 forget-set questions
@@ -180,9 +193,11 @@ baseline (0.21 vs 0.075 for SimNPO) rather than a mechanistic difference — NPO
 was always further from the floor, so there was more distance to recover.
 
 **No compression type restores knowledge to the ceiling.**
-Even in the strongest recovery case (NPO + 4-bit quant, 22% recovery), the model
-remains far below the full-knowledge ceiling. Standard compression does not
-constitute a practical attack on these unlearning methods.
+Even in the strongest recovery case (NPO + 20% pruning, 42% recovery), the
+model remains far below the full-knowledge ceiling (`forget_Q_A_Prob` 0.49 vs
+0.88). Standard compression does not constitute a practical attack on these
+unlearning methods, though the pruning result shows the effect can be larger
+than the quantization result that originally motivated this project.
 
 ## Reproducing
 

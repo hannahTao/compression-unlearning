@@ -12,7 +12,7 @@ reverse LLM unlearning? BlueDot AI Safety Sprint project.
 
 ## Project state
 
-Everything is done except one optional follow-up experiment (see below).
+All three queued follow-up experiments are complete.
 Results are in `sweep_results.csv`. Write-up is in `README.md`.
 
 Follow-up 1 (qualitative inspection) is complete — see `qualitative_results.txt`
@@ -33,10 +33,14 @@ restart. Sweep scripts here are idempotent (skip completed cells via
 check `ps aux` and `nvidia-smi` rather than trusting a stale "running in
 background" note.
 
-**Key finding:** NPO + 4-bit quant recovers 22% of the ceiling–baseline range
-(`forget_Q_A_Prob` 0.209 → 0.353). SimNPO and IdkDPO are robust across all
-non-destructive compression. SVD and pruning ≥ 50% collapse model utility and
-are not interpretable as recovery.
+**Key finding:** NPO is vulnerable to magnitude pruning in a narrow window
+around 15–20% sparsity — recovery peaks at 42% of the ceiling–baseline range
+at 20% sparsity (`forget_Q_A_Prob` 0.209 → 0.491), stronger than the 4-bit
+quant effect (22%, 0.209 → 0.353) that originally motivated this project.
+Recovery is non-monotonic and collapses to ~0% by 30% sparsity. SimNPO and
+IdkDPO are robust across all non-destructive compression. SVD (all levels
+tested, down to keep 99%) and pruning/SVD past their utility-collapse
+thresholds show no recovery.
 
 ## Queued experiments
 
@@ -54,48 +58,24 @@ All 6 new cells ran, `collect_sweep.py` was run, and `README.md`'s SVD rows,
 recovery table, and findings were updated. No recovery at any SVD level;
 utility-collapse threshold is between keep 95% and keep 99%.
 
-### 3. NPO pruning threshold between 10% and 30%
+### 3. NPO pruning threshold between 10% and 30% — DONE
 
-Recovery drops from 21% at 10% sparsity to 0% at 30% with nothing sampled
-between. Add 15% and 20% for NPO only. Edit `run_sweep.sh`, in the pruning
-loop for NPO:
-
-```bash
-# Change:
-for SPARSITY in 0.1 0.3 0.5 0.7; do
-# to:
-for SPARSITY in 0.1 0.15 0.2 0.3 0.5 0.7; do
-```
-
-Or run just the two new cells manually:
-
-```bash
-SCRATCHPAD=/tmp/npo_prune
-for SPARSITY in 0.15 0.2; do
-    python compress_model.py \
-        --model open-unlearning/unlearn_tofu_Llama-3.2-1B-Instruct_forget10_NPO_lr1e-05_beta0.1_alpha1_epoch10 \
-        --method prune --level $SPARSITY --output $SCRATCHPAD
-    cd /workspace/open-unlearning
-    python src/eval.py --config-name=eval.yaml \
-        experiment=eval/tofu/default \
-        model=Llama-3.2-1B-Instruct \
-        model.model_args.pretrained_model_name_or_path=$SCRATCHPAD \
-        model.model_args.attn_implementation=sdpa \
-        model.tokenizer_args.pretrained_model_name_or_path=$SCRATCHPAD \
-        retain_logs_path=saves/eval/tofu_Llama-3.2-1B-Instruct_retain90/TOFU_EVAL.json \
-        task_name=sweep_NPO_prune_$SPARSITY
-    cd /workspace/compression-unlearning
-    rm -rf $SCRATCHPAD
-done
-python collect_sweep.py
-```
+Ran the two new cells (NPO prune 0.15, 0.2) manually, then `collect_sweep.py`.
+Result: recovery peaks at 33% (15% sparsity) and **42%** (20% sparsity) —
+higher than the original 10% cell (21%) and higher than 4-bit quant (22%).
+Recovery collapses back to ~0% by 30% sparsity, so the effect is non-monotonic
+with a narrow peak around 15–20%. `README.md`'s tables and the NPO-vulnerability
+finding were updated; this is now the sweep's strongest recovery signal.
+Not qualitatively inspected (only NPO baseline vs 4-bit was, via
+`qualitative_inspect.py`) — a natural next follow-up if more time is
+available, since the 42% number is larger than the case that was inspected.
 
 ## Key files
 
 | File | Purpose |
 |------|---------|
 | `baselines.csv` | Anchors (ceiling/floor) + pre-compression baselines for NPO, SimNPO, IdkDPO |
-| `sweep_results.csv` | Full compression sweep results (42 rows incl. anchors/baselines) |
+| `sweep_results.csv` | Full compression sweep results (43 rows incl. anchors/baselines) |
 | `qualitative_results.txt` | Output of qualitative_inspect.py (created on first run) |
 | `compress_model.py` | Applies prune or SVD compression, saves to disk |
 | `qualitative_inspect.py` | Side-by-side generation comparison, NPO baseline vs 4-bit |
