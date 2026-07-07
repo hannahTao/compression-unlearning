@@ -256,10 +256,31 @@ than the quantization result that originally motivated this project.
 
 ## Reproducing
 
-All scripts assume the [OpenUnlearning](https://github.com/locuslab/open-unlearning)
-harness is cloned to `/workspace/open-unlearning`. Set `HF_HOME` to your model
-cache. See `setup.sh` for environment setup, `run_sweep.sh` for the compression
-sweep, and `collect_sweep.py` to aggregate results.
+Requires an A100/A5000 (24 GB) GPU instance. Models and eval data are pulled
+from HuggingFace automatically.
+
+```bash
+# 1. Clone the OpenUnlearning harness and this repo side-by-side
+git clone https://github.com/locuslab/open-unlearning /workspace/open-unlearning
+git clone <this-repo> /workspace/compression-unlearning
+cd /workspace/compression-unlearning
+
+# 2. Set up the Python environment
+export HF_HOME=/workspace/hf_cache
+bash setup.sh
+
+# 3. Run the anchor and baseline evals → baselines.csv
+bash run_baselines.sh
+python collect_results.py
+
+# 4. Run the full compression sweep → sweep_results.csv  (~2–3 hrs)
+bash run_sweep.sh
+python collect_sweep.py
+
+# 5. (Optional) Qualitative side-by-side comparisons
+python qualitative_inspect.py --n 20        # NPO baseline vs 4-bit
+python qualitative_inspect_prune.py --n 20  # NPO baseline vs 20%-pruned
+```
 
 ## License
 

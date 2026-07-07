@@ -1,7 +1,7 @@
 # compression-unlearning
 
 Empirical study: does routine model compression (quantization, pruning, SVD)
-reverse LLM unlearning? BlueDot AI Safety Sprint project.
+reverse LLM unlearning? BlueDot AI Safety Sprint project. All experiments complete.
 
 ## Environment (RunPod A5000)
 
@@ -10,81 +10,8 @@ reverse LLM unlearning? BlueDot AI Safety Sprint project.
 - Model cache: `HF_HOME=/workspace/hf_cache`
 - Venv: `source /workspace/compression-unlearning/.venv/bin/activate`
 
-## Project state
-
-All three queued follow-up experiments are complete.
-Results are in `sweep_results.csv`. Write-up is in `README.md`.
-
-Follow-up 1 (qualitative inspection) is complete — see `qualitative_results.txt`
-and the "Qualitative inspection" finding in `README.md`.
-
-Follow-up 2 (finer SVD sweep) is complete. All 6 new cells (keep 0.99/0.95 for
-NPO, SimNPO, IdkDPO) ran, `collect_sweep.py` was run to append results, and
-the SVD rows + a new finding paragraph were added to `README.md`. Result:
-no recovery signal at any SVD level — at keep 99% (mildest tested), utility is
-still ~halved vs baseline and `forget_Q_A_Prob` drops slightly below baseline
-for all three methods rather than recovering. Utility-collapse threshold sits
-between keep 95% and keep 99%.
-
-Note for any future background sweep: the RunPod environment has no
-tmux/screen, so a `nohup ... &` process does not survive a session/pod
-restart. Sweep scripts here are idempotent (skip completed cells via
-`already_done`), so just relaunch if a background run appears to have died —
-check `ps aux` and `nvidia-smi` rather than trusting a stale "running in
-background" note.
-
-**Key finding:** NPO is vulnerable to magnitude pruning in a narrow window
-around 15–20% sparsity — recovery peaks at 42% of the ceiling–baseline range
-at 20% sparsity (`forget_Q_A_Prob` 0.209 → 0.491), stronger than the 4-bit
-quant effect (22%, 0.209 → 0.353) that originally motivated this project.
-Recovery is non-monotonic and collapses to ~0% by 30% sparsity. SimNPO and
-IdkDPO are robust across all non-destructive compression. SVD (all levels
-tested, down to keep 99%) and pruning/SVD past their utility-collapse
-thresholds show no recovery.
-
-## Queued experiments
-
-### 1. Qualitative inspection of NPO + 4-bit — DONE
-
-Ran `python qualitative_inspect.py --n 20`. Output in `qualitative_results.txt`.
-Finding written up in `README.md`: neither model reproduces exact memorized
-facts verbatim; recovery looks like a probability-mass shift under teacher
-forcing rather than restored, freely generated knowledge. A couple of yes/no
-answers flip incorrectly under 4-bit rather than reverting to ground truth.
-
-### 2. Finer SVD sweep (keep 95% and 99% of singular values) — DONE
-
-All 6 new cells ran, `collect_sweep.py` was run, and `README.md`'s SVD rows,
-recovery table, and findings were updated. No recovery at any SVD level;
-utility-collapse threshold is between keep 95% and keep 99%.
-
-### 3. NPO pruning threshold between 10% and 30% — DONE
-
-Ran the two new cells (NPO prune 0.15, 0.2) manually, then `collect_sweep.py`.
-Result: recovery peaks at 33% (15% sparsity) and **42%** (20% sparsity) —
-higher than the original 10% cell (21%) and higher than 4-bit quant (22%).
-Recovery collapses back to ~0% by 30% sparsity, so the effect is non-monotonic
-with a narrow peak around 15–20%. `README.md`'s tables and the NPO-vulnerability
-finding were updated; this is now the sweep's strongest recovery signal.
-
-Follow-up on the pruning peak (qualitative inspection) is also complete —
-see `qualitative_results_prune20.txt` and the corresponding finding in
-`README.md`. Same "probability-mass shift, not verbatim recovery" pattern as
-4-bit quant, plus two differences: (1) on the Tehran-author question, pruning
-and 4-bit converge on nearly the same fabricated name ("Samin Nosari" vs
-"Samin Nosrat") despite unrelated mechanisms — one instance, not something to
-generalize from; (2) the yes/no flips seen under 4-bit don't reproduce under
-pruning. Pruning also shows a repetition/looping artifact (redundant "Answer:
-..." tails, one runaway repetition to the token cap) that 4-bit didn't show.
-
-`README.md` also has a "Limitations & Future Work" section (added after all
-follow-ups landed) flagging: no repeated-seed/error-bar runs on any sweep
-cell (the 42% pruning peak is a single-run point estimate); the 15%/20%
-pruning peak was only checked for NPO, not SimNPO/IdkDPO; scope is limited to
-one model (Llama-3.2-1B-Instruct), one TOFU split (forget10), and three
-unlearning methods; and the qualitative inspections are small hand-checked
-20-question samples, not exhaustive analysis. Any of these would be
-reasonable next work if picking this project back up.
+Note: no tmux/screen on RunPod — `nohup` processes don't survive pod restarts.
+Sweep scripts are idempotent (skip completed cells), so just relaunch if needed.
 
 ## Key files
 
@@ -92,8 +19,8 @@ reasonable next work if picking this project back up.
 |------|---------|
 | `baselines.csv` | Anchors (ceiling/floor) + pre-compression baselines for NPO, SimNPO, IdkDPO |
 | `sweep_results.csv` | Full compression sweep results (43 rows incl. anchors/baselines) |
-| `qualitative_results.txt` | Output of qualitative_inspect.py (NPO baseline vs 4-bit) |
-| `qualitative_results_prune20.txt` | Output of qualitative_inspect_prune.py (NPO baseline vs 20%-pruned) |
+| `qualitative_results.txt` | NPO baseline vs 4-bit, 20 forget-set questions |
+| `qualitative_results_prune20.txt` | NPO baseline vs 20%-pruned, same 20 questions |
 | `compress_model.py` | Applies prune or SVD compression, saves to disk |
 | `qualitative_inspect.py` | Side-by-side generation comparison, NPO baseline vs 4-bit |
 | `qualitative_inspect_prune.py` | Side-by-side generation comparison, NPO baseline vs 20%-pruned |
@@ -104,6 +31,6 @@ reasonable next work if picking this project back up.
 
 - **Lead:** `forget_Q_A_Prob` — prob of correct forget-set answer (lower = better forgotten)
 - **Secondary:** `forget_Q_A_ROUGE`, `extraction_strength`
-- **Control:** `model_utility` — collapses to ~0 at prune ≥ 50% and all SVD cells tested
+- **Control:** `model_utility` — collapses to ~0 at prune ≥ 50% and SVD keep ≤ 95%
 - **Floor** (`_retain90`): 0.116 — **Ceiling** (`_full`): 0.881
 - **Recovery %** = `(compressed − baseline) / (ceiling − baseline)`
