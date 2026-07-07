@@ -19,11 +19,11 @@ Sweep scripts are idempotent (skip completed cells), so just relaunch if needed.
 |------|---------|
 | `baselines.csv` | Anchors (ceiling/floor) + pre-compression baselines for NPO, SimNPO, IdkDPO |
 | `sweep_results.csv` | Full compression sweep results (43 rows incl. anchors/baselines) |
-| `qualitative_results.txt` | NPO baseline vs 4-bit, 20 forget-set questions |
+| `qualitative_results_quant4bit.txt` | NPO baseline vs 4-bit, 20 forget-set questions |
 | `qualitative_results_prune20.txt` | NPO baseline vs 20%-pruned, same 20 questions |
 | `compress_model.py` | Applies prune or SVD compression, saves to disk |
-| `qualitative_inspect.py` | Side-by-side generation comparison, NPO baseline vs 4-bit |
-| `qualitative_inspect_prune.py` | Side-by-side generation comparison, NPO baseline vs 20%-pruned |
+| `qualitative_inspect_quant4bit.py` | Side-by-side generation comparison, NPO baseline vs 4-bit |
+| `qualitative_inspect_prune20.py` | Side-by-side generation comparison, NPO baseline vs 20%-pruned |
 | `run_sweep.sh` | Full compression sweep driver |
 | `collect_sweep.py` | Aggregates harness eval JSON → sweep_results.csv |
 

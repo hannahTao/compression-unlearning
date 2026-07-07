@@ -3,12 +3,12 @@ Side-by-side qualitative comparison of NPO baseline vs NPO 4-bit quantized
 on TOFU forget10 questions.
 
 Usage:
-  python qualitative_inspect.py            # 20 random forget-set questions
-  python qualitative_inspect.py --n 50     # more questions
-  python qualitative_inspect.py --all      # all 200 forget-set questions
-  python qualitative_inspect.py --seed 0   # fix random seed for reproducibility
+  python qualitative_inspect_quant4bit.py            # 20 random forget-set questions
+  python qualitative_inspect_quant4bit.py --n 50     # more questions
+  python qualitative_inspect_quant4bit.py --all      # all 200 forget-set questions
+  python qualitative_inspect_quant4bit.py --seed 0   # fix random seed for reproducibility
 
-Output: printed to stdout and saved to qualitative_results.txt
+Output: printed to stdout and saved to qualitative_results_quant4bit.txt
 """
 
 import argparse
@@ -128,7 +128,7 @@ def main():
     output = "\n".join(lines)
     print("\n" + output)
 
-    out_path = os.path.join(os.path.dirname(__file__), "qualitative_results.txt")
+    out_path = os.path.join(os.path.dirname(__file__), "qualitative_results_quant4bit.txt")
     with open(out_path, "w") as f:
         f.write(output + "\n")
     print(f"\nSaved → {out_path}")

@@ -1,14 +1,14 @@
 """
 Side-by-side qualitative comparison of NPO baseline vs NPO 20%-pruned
 (the recovery peak found in the finer pruning sweep) on TOFU forget10
-questions. Mirrors qualitative_inspect.py's NPO-vs-4-bit comparison but for
+questions. Mirrors qualitative_inspect_quant4bit.py's NPO-vs-4-bit comparison but for
 magnitude pruning.
 
 Usage:
-  python qualitative_inspect_prune.py            # 20 random forget-set questions
-  python qualitative_inspect_prune.py --n 50     # more questions
-  python qualitative_inspect_prune.py --all      # all 200 forget-set questions
-  python qualitative_inspect_prune.py --seed 0   # fix random seed for reproducibility
+  python qualitative_inspect_prune20.py            # 20 random forget-set questions
+  python qualitative_inspect_prune20.py --n 50     # more questions
+  python qualitative_inspect_prune20.py --all      # all 200 forget-set questions
+  python qualitative_inspect_prune20.py --seed 0   # fix random seed for reproducibility
 
 Output: printed to stdout and saved to qualitative_results_prune20.txt
 """

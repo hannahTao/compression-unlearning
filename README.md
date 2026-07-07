@@ -137,7 +137,7 @@ quantization effect that motivated this project.
 
 **Qualitative inspection shows the recovery is probabilistic, not verbatim regurgitation.**
 Greedy-decoding NPO baseline vs NPO 4-bit on 20 forget-set questions
-(`qualitative_inspect.py`, output in `qualitative_results.txt`) finds neither
+(`qualitative_inspect_quant4bit.py`, output in `qualitative_results_quant4bit.txt`) finds neither
 model reproduces the exact memorized TOFU facts (names, book titles, awards).
 Both confabulate, but 4-bit's confabulations differ in content from baseline's
 rather than converging on ground truth — e.g. one question about a fictional
@@ -157,7 +157,7 @@ generated fact.
 
 **Qualitative inspection of the pruning peak (NPO baseline vs NPO 20%-pruned) shows the same pattern, plus two differences from quantization.**
 Ran the same side-by-side comparison on the same 20 questions/seed
-(`qualitative_inspect_prune.py`, output in `qualitative_results_prune20.txt`)
+(`qualitative_inspect_prune20.py`, output in `qualitative_results_prune20.txt`)
 against the 42%-recovery pruning peak. As with 4-bit quant, neither model
 reproduces exact memorized facts — both confabulate different wrong
 specifics, and pruning doesn't converge on ground truth. Two things differ
@@ -278,8 +278,8 @@ bash run_sweep.sh
 python collect_sweep.py
 
 # 5. (Optional) Qualitative side-by-side comparisons
-python qualitative_inspect.py --n 20        # NPO baseline vs 4-bit
-python qualitative_inspect_prune.py --n 20  # NPO baseline vs 20%-pruned
+python qualitative_inspect_quant4bit.py --n 20        # NPO baseline vs 4-bit
+python qualitative_inspect_prune20.py --n 20  # NPO baseline vs 20%-pruned
 ```
 
 ## License
