@@ -84,7 +84,7 @@ All three methods are near or below the floor (0.116), confirming effective unle
 ### Compression sweep (`forget_Q_A_Prob`)
 
 `--` = model utility collapsed (≤ 0.01), cell not interpretable as recovery.
-`n/a` = cell not run (15%/20% pruning was a NPO-only follow-up).
+`n/a` = cell not run (15%/20% pruning was a NPO-only follow-up; SimNPO and IdkDPO showed ≤ 3% recovery at both the 10% and 30% brackets, making an intermediate peak unlikely).
 
 | Compression | level | NPO | SimNPO | IdkDPO |
 |-------------|-------|----:|-------:|-------:|
@@ -240,9 +240,9 @@ than the quantization result that originally motivated this project.
    peak overturned the project's headline number after just one gap-filling
    pass over the sparsity axis.
 2. **The pruning peak was only tested for NPO.** 15%/20% sparsity cells exist
-   only for NPO; SimNPO and IdkDPO were only tested at 10%/30% and showed weak
-   effects there, but an analogous untested peak between those two points
-   can't be ruled out.
+   only for NPO. SimNPO and IdkDPO showed ≤ 3% recovery at both bracketing
+   points (10% and 30% sparsity), making an interesting intermediate peak
+   unlikely — but it can't be formally ruled out without running those cells.
 3. **Narrow scope: one model, one split, three methods.** Everything here is
    `Llama-3.2-1B-Instruct` on TOFU `forget10`, with NPO/SimNPO/IdkDPO
    (GradDiff and RMU were screened out during setup). Findings may not
