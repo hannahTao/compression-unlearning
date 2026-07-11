@@ -1,6 +1,6 @@
 """
 Collect TOFU_SUMMARY.json files from harness saves/ into a single results CSV.
-Usage: python collect_results.py
+Usage: python collect_baselines.py
 """
 import json
 import csv

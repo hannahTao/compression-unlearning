@@ -271,7 +271,7 @@ bash setup.sh
 
 # 3. Run the anchor and baseline evals → results/baselines.csv
 bash run_baselines.sh
-python collect_results.py
+python collect_baselines.py
 
 # 4. Run the full compression sweep → results/sweep_results.csv  (~2–3 hrs)
 bash run_sweep.sh
