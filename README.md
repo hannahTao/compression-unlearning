@@ -137,7 +137,7 @@ quantization effect that motivated this project.
 
 **Qualitative inspection shows the recovery is probabilistic, not verbatim regurgitation.**
 Greedy-decoding NPO baseline vs NPO 4-bit on 20 forget-set questions
-(`qualitative_inspect_quant4bit.py`, output in `qualitative_results_quant4bit.txt`) finds neither
+(`qualitative_inspect_quant4bit.py`, output in `results/qualitative_results_quant4bit.txt`) finds neither
 model reproduces the exact memorized TOFU facts (names, book titles, awards).
 Both confabulate, but 4-bit's confabulations differ in content from baseline's
 rather than converging on ground truth — e.g. one question about a fictional
@@ -157,7 +157,7 @@ generated fact.
 
 **Qualitative inspection of the pruning peak (NPO baseline vs NPO 20%-pruned) shows the same pattern, plus two differences from quantization.**
 Ran the same side-by-side comparison on the same 20 questions/seed
-(`qualitative_inspect_prune20.py`, output in `qualitative_results_prune20.txt`)
+(`qualitative_inspect_prune20.py`, output in `results/qualitative_results_prune20.txt`)
 against the 42%-recovery pruning peak. As with 4-bit quant, neither model
 reproduces exact memorized facts — both confabulate different wrong
 specifics, and pruning doesn't converge on ground truth. Two things differ
@@ -232,7 +232,7 @@ than the quantization result that originally motivated this project.
 
 ## Limitations & Future Work
 
-1. **Single run per cell, no error bars.** Every cell in `sweep_results.csv`
+1. **Single run per cell, no error bars.** Every cell in `results/sweep_results.csv`
    is one eval run. The 42% NPO-pruning peak and the -26% SVD-keep-99% number
    are point estimates; repeated runs (different seeds where the eval harness
    allows, or bootstrapped subsets of the eval set) would show whether these
@@ -269,11 +269,11 @@ cd /workspace/compression-unlearning
 export HF_HOME=/workspace/hf_cache
 bash setup.sh
 
-# 3. Run the anchor and baseline evals → baselines.csv
+# 3. Run the anchor and baseline evals → results/baselines.csv
 bash run_baselines.sh
 python collect_results.py
 
-# 4. Run the full compression sweep → sweep_results.csv  (~2–3 hrs)
+# 4. Run the full compression sweep → results/sweep_results.csv  (~2–3 hrs)
 bash run_sweep.sh
 python collect_sweep.py
 

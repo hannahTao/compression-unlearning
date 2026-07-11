@@ -17,10 +17,10 @@ Sweep scripts are idempotent (skip completed cells), so just relaunch if needed.
 
 | File | Purpose |
 |------|---------|
-| `baselines.csv` | Anchors (ceiling/floor) + pre-compression baselines for NPO, SimNPO, IdkDPO |
-| `sweep_results.csv` | Full compression sweep results (43 rows incl. anchors/baselines) |
-| `qualitative_results_quant4bit.txt` | NPO baseline vs 4-bit, 20 forget-set questions |
-| `qualitative_results_prune20.txt` | NPO baseline vs 20%-pruned, same 20 questions |
+| `results/baselines.csv` | Anchors (ceiling/floor) + pre-compression baselines for NPO, SimNPO, IdkDPO |
+| `results/sweep_results.csv` | Full compression sweep results (43 rows incl. anchors/baselines) |
+| `results/qualitative_results_quant4bit.txt` | NPO baseline vs 4-bit, 20 forget-set questions |
+| `results/qualitative_results_prune20.txt` | NPO baseline vs 20%-pruned, same 20 questions |
 | `compress_model.py` | Applies prune or SVD compression, saves to disk |
 | `qualitative_inspect_quant4bit.py` | Side-by-side generation comparison, NPO baseline vs 4-bit |
 | `qualitative_inspect_prune20.py` | Side-by-side generation comparison, NPO baseline vs 20%-pruned |

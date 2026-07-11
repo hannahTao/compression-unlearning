@@ -8,7 +8,7 @@ import re
 from pathlib import Path
 
 HARNESS = Path("/workspace/open-unlearning")
-OUT = Path("/workspace/compression-unlearning/sweep_results.csv")
+OUT = Path("/workspace/compression-unlearning/results/sweep_results.csv")
 METRICS = ["forget_Q_A_Prob", "forget_Q_A_ROUGE", "extraction_strength", "model_utility"]
 
 ANCHORS = {

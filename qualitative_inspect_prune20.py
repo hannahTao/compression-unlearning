@@ -10,7 +10,7 @@ Usage:
   python qualitative_inspect_prune20.py --all      # all 200 forget-set questions
   python qualitative_inspect_prune20.py --seed 0   # fix random seed for reproducibility
 
-Output: printed to stdout and saved to qualitative_results_prune20.txt
+Output: printed to stdout and saved to results/qualitative_results_prune20.txt
 """
 
 import argparse
@@ -135,7 +135,7 @@ def main():
     output = "\n".join(lines)
     print("\n" + output)
 
-    out_path = os.path.join(os.path.dirname(__file__), "qualitative_results_prune20.txt")
+    out_path = os.path.join(os.path.dirname(__file__), "results", "qualitative_results_prune20.txt")
     with open(out_path, "w") as f:
         f.write(output + "\n")
     print(f"\nSaved → {out_path}")

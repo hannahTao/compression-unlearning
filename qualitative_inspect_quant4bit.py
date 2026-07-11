@@ -8,7 +8,7 @@ Usage:
   python qualitative_inspect_quant4bit.py --all      # all 200 forget-set questions
   python qualitative_inspect_quant4bit.py --seed 0   # fix random seed for reproducibility
 
-Output: printed to stdout and saved to qualitative_results_quant4bit.txt
+Output: printed to stdout and saved to results/qualitative_results_quant4bit.txt
 """
 
 import argparse
@@ -128,7 +128,7 @@ def main():
     output = "\n".join(lines)
     print("\n" + output)
 
-    out_path = os.path.join(os.path.dirname(__file__), "qualitative_results_quant4bit.txt")
+    out_path = os.path.join(os.path.dirname(__file__), "results", "qualitative_results_quant4bit.txt")
     with open(out_path, "w") as f:
         f.write(output + "\n")
     print(f"\nSaved → {out_path}")
