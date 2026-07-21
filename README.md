@@ -4,7 +4,7 @@ A short empirical study testing whether routine post-training compression
 (quantization, magnitude pruning, SVD truncation) causes "unlearned" knowledge
 to reappear in open-weight LLMs.
 
-Built for the BlueDot Technical AI Safety Project Sprint.
+Built for the BlueDot Technical AI Safety Project Sprint. LessWrong post: https://www.lesswrong.com/posts/jXhHH658J4xzWjCu8/does-routine-compression-undo-llm-unlearning-a-short-project
 
 ## Motivation
 
